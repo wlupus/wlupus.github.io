@@ -1,6 +1,5 @@
 ---
 title: "友链"
-subtitle: "subtitle"
 type: "friends"
 date: 2022-04-19T01:14:50+08:00
 description: "wlupus's friends"
@@ -16,10 +15,10 @@ comment: false
 ## Base info
 
 ```yaml
-- nickname: Lruihao
-  avatar: https://lruihao.cn/images/avatar.jpg
-  url: https://lruihao.cn
-  description: Lruihao's Note
+- nickname: wlupus
+  avatar: https://wlupus.github.io/images/avatar.png
+  url: https://wlupus.github.io
+  description: wlupus' Blog
 ```
 
 ## Friendly Reminder
