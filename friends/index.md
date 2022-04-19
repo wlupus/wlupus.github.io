@@ -7,10 +7,10 @@
 ## Base info
 
 ```yaml
-- nickname: Lruihao
-  avatar: https://lruihao.cn/images/avatar.jpg
-  url: https://lruihao.cn
-  description: Lruihao's Note
+- nickname: wlupus
+  avatar: https://wlupus.github.io/images/avatar.png
+  url: https://wlupus.github.io
+  description: wlupus' Blog
 ```
 
 ## Friendly Reminder
