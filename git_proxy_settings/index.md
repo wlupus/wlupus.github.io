@@ -2,7 +2,7 @@
 
 
 <!--more-->
-# 1. http/https 代理
+## 1 http/https 代理
 查看代理
 ```bash
 git config --global --get http.proxy
@@ -21,7 +21,7 @@ git config --global --unset https.proxy
 {{< admonition note >}}
 以上配置只适用于 http/https链接
 {{< /admonition >}}
-# 2. ssh 代理
+## 2 ssh 代理
 ssh代理通过修改ssh配置文件实现, 查看`~/.ssh/config`, 如果没有则创建, 添加如下配置
 ```
 Host github.com
