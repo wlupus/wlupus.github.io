@@ -1,0 +1,690 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>React 入门笔记 - wlupus blog</title><meta name=author content="wlupus: https://wlupus.github.io"><meta name=description content="最近项目重构前端，简单学习使用一下React"><meta name=keywords content="React,Front-end"><meta itemprop=name content="React 入门笔记"><meta itemprop=description content="最近项目重构前端，简单学习使用一下React"><meta itemprop=datePublished content="2022-08-13T21:25:44+08:00"><meta itemprop=dateModified content="2022-08-14T19:37:48+08:00"><meta itemprop=wordCount content="3913"><meta itemprop=image content="https://wlupus.github.io/react_tutorial/twitter_heripiro_1533695061548236800.jpg"><meta itemprop=keywords content="React,Front-end,"><meta property="og:title" content="React 入门笔记"><meta property="og:description" content="最近项目重构前端，简单学习使用一下React"><meta property="og:type" content="article"><meta property="og:url" content="https://wlupus.github.io/react_tutorial/"><meta property="og:image" content="https://wlupus.github.io/react_tutorial/twitter_heripiro_1533695061548236800.jpg"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-08-13T21:25:44+08:00"><meta property="article:modified_time" content="2022-08-14T19:37:48+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://wlupus.github.io/react_tutorial/twitter_heripiro_1533695061548236800.jpg"><meta name=twitter:title content="React 入门笔记"><meta name=twitter:description content="最近项目重构前端，简单学习使用一下React"><meta name=application-name content="wlupus"><meta name=apple-mobile-web-app-title content="wlupus"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#252627"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://wlupus.github.io/react_tutorial/><link rel=prev href=https://wlupus.github.io/mysql_connection/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"React 入门笔记","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/wlupus.github.io\/react_tutorial\/"},"image":[{"@type":"ImageObject","url":"https:\/\/wlupus.github.io\/react_tutorial\/twitter_heripiro_1533695061548236800.jpg","width":1067,"height":1009}],"genre":"posts","keywords":"React, Front-end","wordcount":3913,"url":"https:\/\/wlupus.github.io\/react_tutorial\/","datePublished":"2022-08-13T21:25:44+08:00","dateModified":"2022-08-14T19:37:48+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"wlupus","logo":{"@type":"ImageObject","url":"https:\/\/wlupus.github.io\/images\/avatar.png","width":634,"height":634}},"author":{"@type":"Person","name":"wlupus"},"description":"最近项目重构前端，简单学习使用一下React"}</script></head><body header-desktop=sticky header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="wlupus blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/logo.svg data-srcset="/images/logo.svg, /images/logo.svg 1.5x, /images/logo.svg 2x" data-sizes=auto alt=/images/logo.svg title=/images/logo.svg><span class=header-title-text>wlupus</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/posts/><i class='fas fa-archive fa-fw fa-sm'></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class='fas fa-th fa-fw fa-sm'></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class='fas fa-tags fa-fw fa-sm'></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class='fas fa-users fa-fw fa-sm'></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class='fas fa-info-circle fa-fw fa-sm'></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fas fa-chevron-down"></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></li></ul></nav><a href=https://github.com/wlupus/wlupus.github.io title="在 GitHub 上查看源代码" target=_blank rel="external nofollow noopener noreffer" class=github-corner><svg width="56" height="56" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="wlupus blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/logo.svg data-srcset="/images/logo.svg, /images/logo.svg 1.5x, /images/logo.svg 2x" data-sizes=auto alt=/images/logo.svg title=/images/logo.svg><span class=header-title-text>wlupus</span></a><span class=header-subtitle></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=menu-item><a class=menu-link href=/posts/><i class='fas fa-archive fa-fw fa-sm'></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class='fas fa-th fa-fw fa-sm'></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class='fas fa-tags fa-fw fa-sm'></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class='fas fa-users fa-fw fa-sm'></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class='fas fa-info-circle fa-fw fa-sm'></i> 关于</a></li><li class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fas fa-chevron-down"></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom></aside><article class="page single"><h1 class="single-title animate__animated animate__flipInX">React 入门笔记</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://wlupus.github.io title=Author target=_blank rel="external nofollow noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>wlupus</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E7%AC%94%E8%AE%B0/><i class="far fa-folder fa-fw"></i>笔记</a></span></div><div class=post-meta-line><span title="2022-08-13 21:25:44"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-08-13>2022-08-13</time>
+</span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3913 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/react_tutorial/twitter_heripiro_1533695061548236800.jpg data-srcset="/react_tutorial/twitter_heripiro_1533695061548236800.jpg, /react_tutorial/twitter_heripiro_1533695061548236800.jpg 1.5x, /react_tutorial/twitter_heripiro_1533695061548236800.jpg 2x" data-sizes=auto alt=/react_tutorial/twitter_heripiro_1533695061548236800.jpg title=最近项目重构前端，简单学习使用一下React></div><div class="details toc" id=toc-static kept=false><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-react安装>1 React安装</a></li><li><a href=#2-react基础概念>2 React基础概念</a><ul><li><a href=#21-语法>2.1 语法</a></li><li><a href=#22-组件>2.2 组件</a><ul><li><a href=#221-类组件>2.2.1 类组件</a></li><li><a href=#222-函数组件>2.2.2 函数组件</a></li></ul></li><li><a href=#23-生命周期函数>2.3 生命周期函数</a></li><li><a href=#24-context>2.4 Context</a></li></ul></li><li><a href=#3-react开发相关库>3 React开发相关库</a></li><li><a href=#4-react部署>4 React部署</a></li></ul></nav></div></div><div class=content id=content><h2 id=1-react安装>1 React安装</h2><p>首先安装<a href=https://nodejs.org/en/ target=_blank rel="external nofollow noopener noreffer">Node.js
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>, 安装后将npm添加到环境变量中</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>Node.js算是一个<code>Javascript</code>的运行环境，npm则是类似于一款包管理器。需要注意的是，npm安装的包默认是项目级的，也就是会将包安装到当前路径下的<code>node_modules</code>文件夹中，并非像<code>pip</code>一样安装到全局</p><p>npm常用指令如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npm start                <span class=c1># 运行项目</span>
+</span></span><span class=line><span class=cl>npm install packageName  <span class=c1># 安装包(到当前路径)</span>
+</span></span><span class=line><span class=cl>npm install -g           <span class=c1># 安装包(到全局)</span>
+</span></span><span class=line><span class=cl>npm run build            <span class=c1># 编译项目，生成静态文件并放到./build路径下</span>
+</span></span><span class=line><span class=cl>npm config <span class=nb>set</span> <span class=nv>proxy</span><span class=o>=</span>http://127.0.0.1:7890 <span class=c1># 配置代理</span>
+</span></span><span class=line><span class=cl>npm config <span class=nb>set</span> https-proxy<span class=o>=</span>http://127.0.0.1:7890 <span class=c1># https代理</span>
+</span></span></code></pre></td></tr></table></div></div></div></div></div><p>之后创建新app</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npx create-react-app my-app <span class=c1># my-app 可修改为任意名称， npx是npm5.2+附带的package运行工具</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> my-app
+</span></span><span class=line><span class=cl>npm start                   <span class=c1># 运行app</span>
+</span></span></code></pre></td></tr></table></div></div><p>此时，访问<code>localhost:3000</code>看到app的页面，则安装完成</p><h2 id=2-react基础概念>2 React基础概念</h2><div class="details admonition info open"><div class="details-summary admonition-title"><i class="icon fas fa-info-circle fa-fw"></i>建议<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content>强烈建议先学习完官网给的<a href=https://zh-hans.reactjs.org/tutorial/tutorial.html#setup-option-2-local-development-environment target=_blank rel="external nofollow noopener noreffer">样例
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>，再阅读后面的内容</div></div></div><h3 id=21-语法>2.1 语法</h3><p>React采用的是<code>JSX</code>语法，这种语法的特点是在<code>javascript</code>代码中直接插入<code>HTML</code>代码，将多行<code>HTML</code>代码用圆括号 <em>()</em> 包裹即可(单行HTML可以省略括号)。如果需要在<code>HTML</code>代码中引用<code>javascript</code>的表达式，只需要将javascript表达式用花括号 <em>{}</em> 包裹即可。</p><div class="details admonition example open"><div class="details-summary admonition-title"><i class="icon fas fa-list-ol fa-fw"></i>示例<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=kd>function</span> <span class=nx>DivLink() {</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>value</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span><span class=k>this</span> <span class=k>is</span> <span class=nx>link</span><span class=p>{</span><span class=nx>value</span><span class=p>}&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>return返回的值必须是一个完整的HTML元素，如下代码会报错</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=kd>function</span> <span class=nx>DivLink() {</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>value</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span><span class=k>this</span> <span class=k>is</span> <span class=nx>link</span><span class=p>{</span><span class=nx>value</span><span class=p>}&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span><span class=nx>link2</span><span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>将上面的代码插入到 <strong>App.js</strong> 中，并执行<code>npm start</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=kr>import</span> <span class=nx>logo</span> <span class=kr>from</span> <span class=s1>&#39;./logo.svg&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./App.css&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>App() {</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;App&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;</span><span class=nt>header</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;App-header&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>img</span> <span class=na>src</span><span class=o>=</span><span class=p>{</span><span class=nx>logo</span><span class=p>}</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;App-logo&#34;</span> <span class=na>alt</span><span class=o>=</span><span class=s>&#34;logo&#34;</span> <span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>          <span class=nx>Edit</span> <span class=p>&lt;</span><span class=nt>code</span><span class=p>&gt;</span><span class=nx>src</span><span class=o>/</span><span class=nx>App</span><span class=p>.</span><span class=nx>js</span><span class=p>&lt;/</span><span class=nt>code</span><span class=p>&gt;</span> <span class=nx>and</span> <span class=nx>save</span> <span class=nx>to</span> <span class=nx>reload</span><span class=p>.</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>a</span>
+</span></span><span class=line><span class=cl>          <span class=na>className</span><span class=o>=</span><span class=s>&#34;App-link&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=na>href</span><span class=o>=</span><span class=s>&#34;https://reactjs.org&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=na>target</span><span class=o>=</span><span class=s>&#34;_blank&#34;</span>
+</span></span><span class=line><span class=cl>          <span class=na>rel</span><span class=o>=</span><span class=s>&#34;noopener noreferrer&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>          <span class=nx>Learn</span> <span class=nx>React</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;/</span><span class=nt>header</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;</span><span class=nt>DivLink</span> <span class=p>/&gt;</span> <span class=p>{</span><span class=cm>/* new added line */</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>DivLink() {</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>value</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>a</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;#&#34;</span><span class=p>&gt;</span><span class=k>this</span> <span class=k>is</span> <span class=nx>link</span><span class=p>{</span><span class=nx>value</span><span class=p>}&lt;/</span><span class=nt>a</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=nx>App</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>运行结果如下</p><figure><a class=lightgallery href=/react_tutorial/link1.jpg title=/react_tutorial/link1.jpg data-thumbnail=/react_tutorial/link1.jpg data-sub-html="<h2>执行结果</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=link1.jpg data-srcset="/react_tutorial/link1.jpg, link1.jpg 1.5x, /react_tutorial/link1.jpg 2x" data-sizes=auto alt=/react_tutorial/link1.jpg></a><figcaption class=image-caption>执行结果</figcaption></figure></div></div></div><h3 id=22-组件>2.2 组件</h3><p>组件是React中的最小管理单位。React中的组件有两种类型，一种是类(class)组件，一种是函数组件，组件的名称必须首字母大写，采用大驼峰命名。<div class="details admonition warning open"><div class="details-summary admonition-title"><i class="icon fas fa-exclamation-triangle fa-fw"></i>前置要求<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>阅读下面的例子，需要先了解Javascript的如下内容：</p><ul><li><a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions target=_blank rel="external nofollow noopener noreffer">箭头函数
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a></li><li><a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment target=_blank rel="external nofollow noopener noreffer">解构赋值
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a></li><li><a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax target=_blank rel="external nofollow noopener noreffer">展开语法
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a></li></ul></div></div></div></p><h4 id=221-类组件>2.2.1 类组件</h4><p>一个简单的类组件例子：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Typescript data-lang=Typescript><span class=line><span class=cl><span class=kr>class</span> <span class=nx>SpecialButton</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>click</span>: <span class=kt>0</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>handleClick() {</span>
+</span></span><span class=line><span class=cl>        <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Hello world!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span><span class=nx>click</span>: <span class=kt>this.state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>handleClick</span><span class=p>()}&gt;</span><span class=nx>Click</span><span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span><span class=nx>The</span> <span class=nx>button</span> <span class=nx>has</span> <span class=nx>been</span> <span class=nx>clicked</span> <span class=p>{</span><span class=k>this</span><span class=p>.</span><span class=nx>state</span><span class=p>.</span><span class=nx>click</span><span class=p>}</span> <span class=nx>time</span><span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>这个例子中包含了类组件中的常用功能：状态变量和事件处理函数。一个类组件最基本的结构为：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Typescript data-lang=Typescript><span class=line><span class=cl><span class=kr>class</span> <span class=nx>ComponentName</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(&lt;</span><span class=nt>div</span><span class=p>&gt;&lt;/</span><span class=nt>div</span><span class=p>&gt;);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>constructor</code>函数是类的构造函数，主要用于给类的状态变量赋初始值，参数props是组件的属性。例如，<code>&lt;ComponentName myProp="prop">&lt;/p></code>, 此时构造函数接收的props参数会是<code>{myProp: "prop"}</code>对象。注意此处的<code>super</code>函数不可省略，需要构造基类。</li><li><code>render</code>函数是渲染函数，用于渲染最终显示的内容</li></ul><p>对于状态变量，必须通过setState方法来更新，才能触发重新渲染组件的流程。</p><p>对于事件处理函数，此处button的onClick属性为React内置的事件属性，我们为该属性赋值，即可在点击按钮时触发对应的代码，事件属性的值必须是一个函数。之所以这里使用箭头函数，是因为箭头函数中没有this, 此时this仍然会指向class本身，便于我们访问class的状态变量以及成员函数。<div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw"></i>进阶知识<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>对于setState使用不当，可能产生预期之外的结果，常见的一种错误：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Typescript data-lang=Typescript><span class=line><span class=cl><span class=kr>class</span> <span class=nx>SpecialButton</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>click</span>: <span class=kt>0</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>handleClick() {</span>
+</span></span><span class=line><span class=cl>        <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Hello world!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span><span class=nx>click</span>: <span class=kt>this.state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span><span class=nx>click</span>: <span class=kt>this.state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>handleClick</span><span class=p>()}&gt;</span><span class=nx>Click</span><span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span><span class=nx>The</span> <span class=nx>button</span> <span class=nx>has</span> <span class=nx>been</span> <span class=nx>clicked</span> <span class=p>{</span><span class=k>this</span><span class=p>.</span><span class=nx>state</span><span class=p>.</span><span class=nx>click</span><span class=p>}</span> <span class=nx>time</span><span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>此时点击一次，并不会让click计数器加2，这是因为React会优化setState的调用，可能会把多个 setState() 调用合并成一个调用。要实现上面的功能，可以给setState传一个函数。</p><p>将<code>handleClick</code>修改成下面内容</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Typescript data-lang=Typescript><span class=line><span class=cl><span class=nx>handleClick() {</span>
+</span></span><span class=line><span class=cl>    <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Hello world!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>((</span><span class=nx>state</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>({</span><span class=nx>click</span>: <span class=kt>state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>}));</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>((</span><span class=nx>state</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>({</span><span class=nx>click</span>: <span class=kt>state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>}));</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>此时就可以实现一次点击增加两次。</p><p>根据个人实践，用到这种方式的情况很少，所以更简单的办法就是在设计模块和事件的时候，避免在一次事件处理中调用多次<code>setState</code>。</p><p>同理，如果<code>setState</code>的时候，需要同时用到state和property，也会出现上面的情况，因为state和property的更新是独立的。解决方案也和上面一样。</p></div></div></div></p><h4 id=222-函数组件>2.2.2 函数组件</h4><p>函数组件的核心概念和类组件相同，只是函数组件里的状态变量需要通过<a href=https://zh-hans.reactjs.org/docs/hooks-intro.html target=_blank rel="external nofollow noopener noreffer">hook
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>创建</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Typescript data-lang=Typescript><span class=line><span class=cl><span class=kd>function</span> <span class=nx>SpecialButton() {</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=p>[</span><span class=nx>click</span><span class=p>,</span> <span class=nx>setClick</span><span class=p>]</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>useState</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span> <span class=c1>// 创建状态变量，以及对应的set函数，这里用到了解构赋值
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>handleClick</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Hello world!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>setClick</span><span class=p>(</span><span class=nx>click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{</span><span class=nx>handleClick</span><span class=p>}&gt;</span><span class=nx>Click</span><span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span><span class=nx>The</span> <span class=nx>button</span> <span class=nx>has</span> <span class=nx>been</span> <span class=nx>clicked</span> <span class=p>{</span><span class=nx>click</span><span class=p>}</span> <span class=nx>time</span><span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw"></i>进阶知识<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>和上面class组件的setState函数相同，函数组件的状态也是异步更新的，所以上面提到的问题同样会出现。解决方案也是相同的，这里不再赘述，只放一个可行的例子。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Typescript data-lang=Typescript><span class=line><span class=cl><span class=kd>function</span> <span class=nx>SpecialButton2() {</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=p>[</span><span class=nx>click</span><span class=p>,</span> <span class=nx>setClick</span><span class=p>]</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>useState</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>handleClick</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Hello world!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>setClick</span><span class=p>((</span><span class=nx>click</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nx>click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>setClick</span><span class=p>((</span><span class=nx>click</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nx>click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{</span><span class=nx>handleClick</span><span class=p>}&gt;</span><span class=nx>Click</span><span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span><span class=nx>The</span> <span class=nx>button</span> <span class=nx>has</span> <span class=nx>been</span> <span class=nx>clicked</span> <span class=p>{</span><span class=nx>click</span><span class=p>}</span> <span class=nx>time</span><span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></div></div></div><h3 id=23-生命周期函数>2.3 生命周期函数</h3><p>React组件支持很多生命周期函数，这里我只学习了官方文档的简单<a href=https://zh-hans.reactjs.org/docs/state-and-lifecycle.html target=_blank rel="external nofollow noopener noreffer">例子
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>，在项目中使用了<code>componentDidMount()</code>函数，该函数会在组件挂载后执行一次，我在这个函数中发送ajax请求，用来初始化组件的某些值。</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content>要在React应用中使用 <strong>jQuery</strong>, 只需要先安装(<code>npm install jquery</code>)，再导入(<code>import $ from 'jquery'</code>)即可.</div></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=cm>/* 使用jquery请求设置click初始值 */</span>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>SpecialButton</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>click</span>: <span class=kt>0</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>componentDidMount() {</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>initializeClick</span> <span class=o>=</span> <span class=p>(</span><span class=nx>value</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span><span class=nx>click</span>: <span class=kt>value</span><span class=p>}));</span>
+</span></span><span class=line><span class=cl>        <span class=nx>$</span><span class=p>.</span><span class=nx>ajax</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>            <span class=kr>type</span><span class=o>:</span> <span class=s1>&#39;get&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nx>url</span><span class=o>:</span> <span class=s1>&#39;http://localhost:3000&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nx>success</span>: <span class=kt>function</span> <span class=p>(</span><span class=nx>response</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>response</span><span class=p>.</span><span class=nx>length</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=nx>initializeClick</span><span class=p>(</span><span class=nx>response</span><span class=p>.</span><span class=nx>length</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>handleClick() {</span>
+</span></span><span class=line><span class=cl>        <span class=nx>alert</span><span class=p>(</span><span class=s1>&#39;Hello world!&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>((</span><span class=nx>state</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>({</span><span class=nx>click</span>: <span class=kt>state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>}));</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>((</span><span class=nx>state</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>({</span><span class=nx>click</span>: <span class=kt>state.click</span> <span class=o>+</span> <span class=mi>1</span><span class=p>}));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>handleClick</span><span class=p>()}&gt;</span><span class=nx>Click</span><span class=p>&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span><span class=nx>The</span> <span class=nx>button</span> <span class=nx>has</span> <span class=nx>been</span> <span class=nx>clicked</span> <span class=p>{</span><span class=k>this</span><span class=p>.</span><span class=nx>state</span><span class=p>.</span><span class=nx>click</span><span class=p>}</span> <span class=nx>time</span><span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>运行后，click的初始值应该和console的输出一致</p><h3 id=24-context>2.4 Context</h3><p>在React组件中，数据的流向是自上而下的。换句话说，如果下层组件需要上层组件的信息，需要通过props逐层传递。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=kr>class</span> <span class=nx>A</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>type</span><span class=o>:</span> <span class=s1>&#39;test&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>&lt;</span><span class=nt>B</span> <span class=na>type</span><span class=o>=</span><span class=p>{</span><span class=k>this</span><span class=p>.</span><span class=nx>state</span><span class=p>.</span><span class=kr>type</span><span class=p>}/&gt;;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>B</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>&lt;</span><span class=nt>C</span> <span class=na>type</span><span class=o>=</span><span class=p>{</span><span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>.</span><span class=kr>type</span><span class=p>}/&gt;;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>C</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>&lt;</span><span class=nt>button</span><span class=p>&gt;{</span><span class=k>this</span><span class=p>.</span><span class=nx>props</span><span class=p>.</span><span class=kr>type</span><span class=p>}&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>这段代码中，只有C用到了A提供的属性，但是中间有一层B，需要进行额外的传输工作。此时，可以考虑使用context。除此之外，context还可以用于存储多个组件共享的信息，比如当前用户的登录状态等。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=kr>const</span> <span class=nx>TypeContext</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>createContext</span><span class=p>(</span><span class=s1>&#39;default value&#39;</span><span class=p>);</span> <span class=c1>// 使用createContext hook创建context
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>A</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>type</span><span class=o>:</span> <span class=s1>&#39;test&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span><span class=cm>/* Context的Provider 会向下层提供value属性的值来作为该Context的值*/</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>TypeContext.Provider</span> <span class=na>value</span><span class=o>=</span><span class=p>{</span><span class=k>this</span><span class=p>.</span><span class=nx>state</span><span class=p>.</span><span class=kr>type</span><span class=p>}&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>B</span> <span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>TypeContext.Provider</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>B</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>&lt;</span><span class=nt>C</span> <span class=p>/&gt;;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>C</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>static</span> <span class=nx>contextType</span> <span class=o>=</span> <span class=nx>TypeContext</span><span class=p>;</span> <span class=cm>/* 使用TypeContext作为自身的context属性*/</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 这里会寻找(嵌套层次)最近的TypeContext的Provider的值
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>return</span> <span class=p>&lt;</span><span class=nt>button</span><span class=p>&gt;{</span><span class=k>this</span><span class=p>.</span><span class=nx>context</span><span class=p>}&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>// 函数式组件可以通过useContext hook 使用Context
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>function</span> <span class=nx>D() {</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>context</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>useContext</span><span class=p>(</span><span class=nx>TypeContext</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>&lt;</span><span class=nt>button</span><span class=p>&gt;{</span><span class=nx>context</span><span class=p>}&lt;/</span><span class=nt>button</span><span class=p>&gt;;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>执行上述代码，最终可以渲染出包含test文字的按钮。</p><p>对于需要在使用context的组件中，对context修改的情况，可以通过将Context视作一个对象，在该对象中添加修改context的方法来实现。
+参照上面的例子：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=c1>// 将Context的默认值修改为包含两个属性的对象
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>const</span> <span class=nx>TypeContext</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>createContext</span><span class=p>({</span><span class=nx>value</span>: <span class=kt>null</span><span class=p>,</span> <span class=nx>setValue</span>: <span class=kt>null</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>A</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>type</span><span class=o>:</span> <span class=s1>&#39;test&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>contextValue</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>value</span>: <span class=kt>this.state.type</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nx>setValue</span><span class=o>:</span> <span class=p>(</span><span class=nx>newValue</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span><span class=kr>type</span><span class=o>:</span> <span class=nx>newValue</span><span class=p>}),</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>TypeContext.Provider</span> <span class=na>value</span><span class=o>=</span><span class=p>{</span><span class=nx>contextValue</span><span class=p>}&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>B</span> <span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>TypeContext.Provider</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>B</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>static</span> <span class=nx>contextType</span> <span class=o>=</span> <span class=nx>TypeContext</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span><span class=cm>/* 调用context对象的setValue方法，实现对A组件的state的修改，
+</span></span></span><span class=line><span class=cl><span class=cm>                进而修改Context的值，重新渲染子组件 */</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>context</span><span class=p>.</span><span class=nx>setValue</span><span class=p>(</span><span class=s1>&#39;new value&#39;</span><span class=p>)}&gt;{</span><span class=k>this</span><span class=p>.</span><span class=nx>context</span><span class=p>.</span><span class=nx>value</span><span class=p>}&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>添加A组件，会显示一个按钮，点击按钮，会将按钮的内容修改为&rsquo;new value'</p><p>对于需要多个Context的值的情况，需要使用Consumer，这里演示Consumer的使用方法，多个Context的样例可以参考<a href=https://zh-hans.reactjs.org/docs/context.html#contextconsumer target=_blank rel="external nofollow noopener noreffer">官方文档
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-typescript data-lang=typescript><span class=line><span class=cl><span class=kr>const</span> <span class=nx>TypeContext</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>createContext</span><span class=p>({</span><span class=nx>value</span>: <span class=kt>null</span><span class=p>,</span> <span class=nx>setValue</span>: <span class=kt>null</span><span class=p>});</span> <span class=c1>// 使用createContext hook创建context
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>A</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>state</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>type</span><span class=o>:</span> <span class=s1>&#39;test&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>contextValue</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>value</span>: <span class=kt>this.state.type</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nx>setValue</span><span class=o>:</span> <span class=p>(</span><span class=nx>newValue</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>setState</span><span class=p>({</span><span class=kr>type</span><span class=o>:</span> <span class=nx>newValue</span><span class=p>}),</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>TypeContext.Provider</span> <span class=na>value</span><span class=o>=</span><span class=p>{</span><span class=nx>contextValue</span><span class=p>}&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>&lt;</span><span class=nt>B</span> <span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>TypeContext.Provider</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>B</span> <span class=kr>extends</span> <span class=nx>React</span><span class=p>.</span><span class=nx>Component</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>constructor</span><span class=p>(</span><span class=nx>props</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>super</span><span class=p>(</span><span class=nx>props</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>render() {</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>TypeContext.Consumer</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span><span class=cm>/* Consumer的子元素需要是一个函数，该函数接收Context的值作为参数，返回需要渲染的HTML结果*/</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>                <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=nx>context</span> <span class=o>=&gt;</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>                        <span class=p>&lt;</span><span class=nt>button</span> <span class=na>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=nx>context</span><span class=p>.</span><span class=nx>setValue</span><span class=p>(</span><span class=s1>&#39;new value&#39;</span><span class=p>)}&gt;{</span><span class=nx>context</span><span class=p>.</span><span class=nx>value</span><span class=p>}&lt;/</span><span class=nt>button</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;/</span><span class=nt>TypeContext.Consumer</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=3-react开发相关库>3 React开发相关库</h2><p>目前，我主要使用了<a href=https://github.com/rsuite/rsuite target=_blank rel="external nofollow noopener noreffer">rsuite
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>作为组件库，使用<a href=https://reactrouter.com/docs/en/v6/getting-started/overview target=_blank rel="external nofollow noopener noreffer">react-router v6
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>作为前端路由库，使用<a href=https://react-chartjs-2.js.org/ target=_blank rel="external nofollow noopener noreffer">react-chartjs-2
+<i class="fas fa-external-link-alt fa-fw fa-xs"></i></a>作为图表展示工具。</p><p>相关库的使用方法参考文档，后续有时间会在这里补充</p><h2 id=4-react部署>4 React部署</h2><p>Create-react-app默认配置了webpack等内容，目前我主要为默认配置，仅修改了prebuild, postbuild等hook，这部分还有待研究。</p><p>常规的部署流程为</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm run build
+</span></span></code></pre></td></tr></table></div></div><p>之后，在build路径下就会生成index.html，以及对应的static文件，将index.html和静态文件拷贝到对应的后端即可。</p><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content>如果使用了<code>react-router</code>，那么要正确区分前端路由和后端路由。对于任意一个前端路由，后端都需要返回index.html文件，这是因为前端路由的实现组件是在index.html中的，如果后端不返回index.html文件，<code>react-router</code>无法正常工作</div></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2022-08-14 19:37:48">更新于 2022-08-14&nbsp;<a class=git-hash href=https://github.com/wlupus/wlupus.github.io/commit/2cd951fc0fa467f3852e55f1dc21daeb96158bc6 rel="external nofollow noopener noreffer" target=_blank title="commit by wlupus(arthurreload@outlook.com) 2cd951fc0fa467f3852e55f1dc21daeb96158bc6: add react_tutorial">
+<i class="fas fa-hashtag fa-fw"></i>2cd951f</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/react_tutorial/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://wlupus.github.io/react_tutorial/ data-title="React 入门笔记" data-via=wlupus1 data-hashtags=React,Front-end><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://wlupus.github.io/react_tutorial/ data-hashtag=React><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://wlupus.github.io/react_tutorial/ data-title="React 入门笔记"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/react/>React</a>,&nbsp;<a href=/tags/front-end/>Front-end</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/mysql_connection/ class=prev rel=prev title="Mysql Connection"><i class="fas fa-angle-left fa-fw"></i>Mysql Connection</a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2022</span><span class=author itemprop=copyrightHolder>
+<a href=https://wlupus.github.io target=_blank rel="external nofollow noopener noreffer">wlupus</a></span><span class=footer-divider></span><span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js async defer></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js defer></script><script type=text/javascript src=/lib/sharer/sharer.min.js async defer></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js defer></script><script type=text/javascript src=/lib/pangu/pangu.min.js defer></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},enablePWA:!0,enablePangu:!0,lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0}}</script><script type=text/javascript src=/js/theme.min.js defer></script><script type=text/javascript src=/js/_custom.min.js defer></script></body></html>
