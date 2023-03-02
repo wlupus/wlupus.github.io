@@ -1,8 +1,8 @@
 ---
-title: "Windows Git 代理配置"
+title: "Git 代理配置"
 date: 2022-04-19T01:01:02+08:00
 draft: false
-description: "windows 下 Git 代理的相关配置"
+description: "Git 代理的相关配置"
 
 categories: ["笔记"]
 tags: ["git"]
@@ -41,7 +41,9 @@ Host github.com
   Port 443
   # 注意修改路径为你的路径
   IdentityFile "C:\Users\Reload\.ssh\id_rsa"
+  # IdentityFile "/Users/username/.ssh/id_rsa"
   ProxyCommand  connect.exe -H 127.0.0.1:7890 -a none %h %p
+  # on macos: ProxyCommand nc -X 5 -x localhost:7890 %h %p
   TCPKeepAlive yes
 ```
 **Host**指定了下列配置针对的主机名称规则, 可以使用通配符`*`(0-n字符)和`?`(1个字符)
@@ -64,12 +66,17 @@ Host myserver
 
 **IdentityFile** 是对应私钥的存放路径
 
-**ProxyCommand** 是在连接前执行的指令, 这里使用connect工具(windows 版本 git 自带)
+**ProxyCommand** 是在连接前执行的指令
+
+windows下使用connect工具(windows 版本 git 自带)
 
 connect的主要参数  `[-H proxy-server[:port]] [-S [user@]socks-server[:port]]`
 
 所以 **-H** 对应http代理, **-S** 对应socks5代理.
 这里的 **-a none** 是 NO-AUTH 模式的含义
+
+linux/macos下可以直接使用nc
+-X 指定proxy version, -x 指定proxy ip & port, 具体可参考nc的man page
 
 **%h** **%p** 是ssh配置文件中默认的占位符, 分别代表替换后的hostname和port
 
