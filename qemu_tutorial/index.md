@@ -70,3 +70,7 @@ export https_proxy=http://ip_addr:port
 {{<admonition tip>}}
 qemu中默认映射的host ip地址为10.0.2.2
 {{</admonition>}}
+
+{{<admonition warning>}}
+经过测试后发现，性能还是很差，gdb之类的工具用起来会有明显延迟，只能图一乐
+{{</admonition>}}
